@@ -92,6 +92,11 @@ class ChatBot extends Component {
         settings = defaultCustomSettings;
       }
 
+      const { options } = step;
+      if (options) {
+        step.options = typeof options === 'function' ? options() : options;
+      }
+
       chatSteps[step.id] = Object.assign({}, settings, schema.parse(step));
     }
 
@@ -103,6 +108,11 @@ class ChatBot extends Component {
       const { message } = firstStep;
       firstStep.message = typeof message === 'function' ? message() : message;
       chatSteps[firstStep.id].message = firstStep.message;
+    }
+
+    if (firstStep.options) {
+      const { options } = firstStep;
+      firstStep.options = typeof options === 'function' ? options() : options;
     }
 
     const { recognitionEnable } = this.state;

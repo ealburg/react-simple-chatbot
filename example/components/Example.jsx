@@ -17,7 +17,7 @@ const otherFontTheme = {
 const steps = [
   {
     id: '1',
-    message: 'Hello World',
+    options: () => { return [{value: '1', label: 'finally worked'}]},
     end: true
   }
 ];

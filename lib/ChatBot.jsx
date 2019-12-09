@@ -92,11 +92,6 @@ class ChatBot extends Component {
         settings = defaultCustomSettings;
       }
 
-      const { options } = step;
-      if (options) {
-        step.options = typeof options === 'function' ? options() : options;
-      }
-
       chatSteps[step.id] = Object.assign({}, settings, schema.parse(step));
     }
 
@@ -230,6 +225,14 @@ class ChatBot extends Component {
     return typeof message === 'function' ? message({ previousValue, steps }) : message;
   };
 
+  getStepOptions = options => {
+    const { previousSteps } = this.state;
+    const lastStepIndex = previousSteps.length > 0 ? previousSteps.length - 1 : 0;
+    const steps = this.generateRenderedStepsById();
+    const previousValue = previousSteps[lastStepIndex].value;
+    return typeof options === 'function' ? options({ previousValue, steps }) : options;
+  };
+
   generateRenderedStepsById = () => {
     const { previousSteps } = this.state;
     const steps = {};
@@ -299,7 +302,7 @@ class ChatBot extends Component {
 
       const trigger = this.getTriggeredStep(currentStep.trigger, currentStep.value);
       let nextStep = Object.assign({}, steps[trigger]);
-
+      console.log(nextStep);
       if (nextStep.message) {
         nextStep.message = this.getStepMessage(nextStep.message);
       } else if (nextStep.update) {
@@ -307,12 +310,15 @@ class ChatBot extends Component {
         nextStep = Object.assign({}, steps[updateStep.update]);
 
         if (nextStep.options) {
+          nextStep.options = this.getStepOptions(nextStep.options);
           for (let i = 0, len = nextStep.options.length; i < len; i += 1) {
             nextStep.options[i].trigger = updateStep.trigger;
           }
         } else {
           nextStep.trigger = updateStep.trigger;
         }
+      } else if (nextStep.options) {
+        nextStep.options = this.getStepOptions(nextStep.options);
       }
 
       nextStep.key = Random(24);

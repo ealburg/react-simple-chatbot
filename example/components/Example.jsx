@@ -24,11 +24,8 @@ const steps = [
     trigger: '3'
   },
   { id: '3', message: 'this is the value {previousValue}', trigger: '4' },
-  {id: '4',
-  options: [{value: 1, label: '1', trigger: '5'}]},
-  {id: '5', 
-message: "thank you {previousValue}",
-end: true}
+  { id: '4', options: [{ value: 1, label: '1', trigger: '5' }] },
+  { id: '5', message: 'thank you {previousValue}', end: true }
 ];
 
 const ThemedExample = () => (

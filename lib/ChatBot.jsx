@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Random from 'random-id';
+import { isArray } from 'util';
 import { CustomStep, OptionsStep, TextStep } from './steps_components';
 import schema from './schemas/schema';
 import * as storage from './storage';
@@ -20,7 +21,6 @@ import Recognition from './recognition';
 import { ChatIcon, CloseIcon, SubmitIcon, MicIcon } from './icons';
 import { isMobile } from './utils';
 import { speakFn } from './speechSynthesis';
-import { isArray } from 'util';
 
 class ChatBot extends Component {
   /* istanbul ignore next */

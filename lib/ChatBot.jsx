@@ -276,13 +276,15 @@ class ChatBot extends Component {
       this.handleEnd();
     } else if (data && currentStep.component && data.sendUserMessage) {
       const option = isArray(data.value) ? data.value.join(', ') : data.value;
+      const trigger = this.getTriggeredStep(currentStep.trigger, currentStep.value);
       delete currentStep.component;
-      currentStep = Object.assign({}, currentStep, option, defaultUserSettings, {
+      delete currentStep.waitAction;
+      delete currentStep.asMessage;
+      currentStep = Object.assign({}, currentStep, defaultUserSettings, {
         user: true,
         message: option,
-        trigger: currentStep.trigger
+        trigger
       });
-
       renderedSteps.pop();
       previousSteps.pop();
       renderedSteps.push(currentStep);

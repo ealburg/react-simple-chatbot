@@ -274,7 +274,7 @@ class ChatBot extends Component {
 
     if (isEnd) {
       this.handleEnd();
-    } else if (data && currentStep.component) {
+    } else if (data && currentStep.component && data.sendUserMessage) {
       const option = isArray(data.value) ? data.value.join(', ') : data.value;
       delete currentStep.component;
       currentStep = Object.assign({}, currentStep, option, defaultUserSettings, {

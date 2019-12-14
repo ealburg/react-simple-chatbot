@@ -33,7 +33,8 @@ module.exports = {
     globalObject: "typeof self !== 'undefined' ? self : this"
   },
   resolve: {
-    extensions: ['.js', '.jsx']
+    extensions: ['.js', '.jsx'],
+    symlinks: false
   },
   plugins: [
     new CleanWebpackPlugin(['dist']),

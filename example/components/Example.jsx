@@ -1,6 +1,7 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import ChatBot from '../../lib/index';
+import { CustomBotComponent } from './Custom';
 
 const otherFontTheme = {
   background: '#f5f8fb',
@@ -13,47 +14,21 @@ const otherFontTheme = {
   userBubbleColor: '#fff',
   userFontColor: '#4a4a4a'
 };
-let counter = 0;
-let stepCount = 1;
-
-const optionloop = () => {
-  console.log("counter-options", counter);
-  if (counter === 0) {
-    return [{ value: '1', label: 'finally worked', trigger: triggerloop}];
-  } else {
-    return [{ value: '1', label: '2nd worked too finally worked', trigger: 'end' }];
-  }
-};
-
-const messageloop = () => {
-  console.log("counter-message", counter);
-  if (counter === 0) {
-    return 'first question';
-  } else {
-    return 'second question';
-  }
-};
-
-const triggerloop = () => {
-  console.log("counter-trigger", counter);
-  counter++;
-  stepCount++;
-  return stepCount + '';
-}
 
 const steps = [
-  { id: 'welcome', message: messageloop, trigger: '1' },
+  { id: 'enter', message: 'step 1', trigger: '2' },
   {
-    id: '1',
-    options: optionloop
+    id: '2',
+    component: <CustomBotComponent />,
+    waitAction: true,
+    trigger: '3'
   },
-  {id : '2',
-  message: messageloop,
-trigger: triggerloop},
-{id: '3',
-options: optionloop,
-end: true},
-{ id: 'end', message: 'the end', end: true}
+  { id: '3', message: 'this is the value {previousValue}', trigger: '4' },
+  {id: '4',
+  options: [{value: 1, label: '1', trigger: '5'}]},
+  {id: '5', 
+message: "thank you {previousValue}",
+end: true}
 ];
 
 const ThemedExample = () => (

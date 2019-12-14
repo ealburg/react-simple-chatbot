@@ -20,6 +20,7 @@ import Recognition from './recognition';
 import { ChatIcon, CloseIcon, SubmitIcon, MicIcon } from './icons';
 import { isMobile } from './utils';
 import { speakFn } from './speechSynthesis';
+import { isArray } from 'util';
 
 class ChatBot extends Component {
   /* istanbul ignore next */
@@ -273,6 +274,25 @@ class ChatBot extends Component {
 
     if (isEnd) {
       this.handleEnd();
+    } else if (data && currentStep.component) {
+      const option = isArray(data.value) ? data.value.join(', ') : data.value;
+      delete currentStep.component;
+      currentStep = Object.assign({}, currentStep, option, defaultUserSettings, {
+        user: true,
+        message: option,
+        trigger: currentStep.trigger
+      });
+
+      renderedSteps.pop();
+      previousSteps.pop();
+      renderedSteps.push(currentStep);
+      previousSteps.push(currentStep);
+
+      this.setState({
+        currentStep,
+        renderedSteps,
+        previousSteps
+      });
     } else if (currentStep.options && data) {
       const option = currentStep.options.filter(o => o.value === data.value)[0];
       const trigger = this.getTriggeredStep(option.trigger, currentStep.value);

@@ -234,6 +234,35 @@ class ChatBot extends Component {
     return typeof options === 'function' ? options({ previousValue, steps }) : options;
   };
 
+  moveToStep = (id, trigger = null) => {
+    const { previousSteps, renderedSteps, steps } = this.state;
+
+    const { defaultUserSettings } = this.state;
+
+    let targetStep = steps[id];
+    if (targetStep) {
+      targetStep = Object.assign({}, defaultUserSettings, targetStep);
+      if (trigger != null) {
+        if (targetStep.end) {
+          delete targetStep.end;
+        }
+        targetStep.trigger = trigger;
+      }
+
+      renderedSteps.push(targetStep);
+      previousSteps.push(targetStep);
+
+      const self = this;
+      setTimeout(() => {
+        self.setState({
+          currentStep: targetStep,
+          renderedSteps,
+          previousSteps
+        });
+      }, 800);
+    }
+  };
+
   generateRenderedStepsById = () => {
     const { previousSteps } = this.state;
     const steps = {};
@@ -272,8 +301,9 @@ class ChatBot extends Component {
       currentStep.trigger = this.getTriggeredStep(data.trigger, data.value);
     }
 
-    if (data && currentStep.dispatchMessage) {
-      currentStep.dispatchMessage(data.value);
+    if (currentStep.dispatchMessage) {
+      const payload = data ? data.value : null;
+      currentStep.dispatchMessage(payload);
     }
 
     if (isEnd) {

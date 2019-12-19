@@ -272,6 +272,10 @@ class ChatBot extends Component {
       currentStep.trigger = this.getTriggeredStep(data.trigger, data.value);
     }
 
+    if (data && currentStep.dispatchMessage) {
+      currentStep.dispatchMessage(data.value);
+    }
+
     if (isEnd) {
       this.handleEnd();
     } else if (data && currentStep.component && data.sendUserMessage) {

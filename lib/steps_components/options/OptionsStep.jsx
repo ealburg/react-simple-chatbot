@@ -12,8 +12,6 @@ class OptionsStep extends Component {
     const { triggerNextStep } = this.props;
 
     triggerNextStep({ value });
-
-    console.log('triggerd click');
   };
 
   renderOption = option => {
@@ -62,7 +60,7 @@ class OptionsStep extends Component {
 
     return (
       <OptionsStepContainer className="rsc-os">
-        <Options className="rsc-os-options">
+        <Options className="rsc-os-options" style={{ display: 'flex' }}>
           {Object.keys(options)
             .map(key => options[key])
             .map(this.renderOption)}

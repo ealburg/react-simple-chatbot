@@ -22,8 +22,15 @@ const steps = [
     options: [
       {
         value: 'one',
-        label: 'one',
-        iconClass: 'fas fa-bolt',
+        label: "Let's get started",
+        iconClass: ['fas', 'bolt'],
+        color: 'yellow',
+        trigger: 'image-option'
+      },
+      {
+        value: 'twa',
+        label: 'twa',
+        iconClass: ['fas', 'search'],
         color: 'yellow',
         trigger: 'image-option'
       }

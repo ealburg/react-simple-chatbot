@@ -18,9 +18,10 @@ class OptionsStep extends Component {
     const { bubbleOptionStyle, step } = this.props;
     const { user, optionType = 'default' } = step;
     const { value, label, image, iconClass, color } = option;
+    const key = `option_${Math.floor(Math.random() * 1000)}`;
 
     return optionType === 'default' ? (
-      <Option key={value} className="rsc-os-option">
+      <Option key={value} className="rsc-os-option" key={key}>
         <OptionElement
           className="rsc-os-option-element"
           style={bubbleOptionStyle}
@@ -58,9 +59,12 @@ class OptionsStep extends Component {
     const { step } = this.props;
     const { options } = step;
 
+    const key = `optionstep_${Math.floor(Math.random() * 1000)}`;
+    const key2 = `optionstep_${Math.floor(Math.random() * 1000)}`;
+    
     return (
-      <OptionsStepContainer className="rsc-os">
-        <Options className="rsc-os-options" style={{ display: 'flex' }}>
+      <OptionsStepContainer className="rsc-os" key={key}>
+        <Options key={key2} className="rsc-os-options" style={{ display: 'flex' }}>
           {Object.keys(options)
             .map(key => options[key])
             .map(this.renderOption)}

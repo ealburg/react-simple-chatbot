@@ -67,8 +67,12 @@ export default class IconTextOptionElement extends Component {
   }
 
   zoomIn() {
-    const { currentStyle } = this.state;
-    const newObj = { ...currentStyle, transform: 'scale(1.2) translateY(-5px)' };
+    const { currentStyle, iconClass } = this.state;
+    let rotate = '';
+    if (iconClass[1] === 'bolt') {
+        rotate = 'rotate(30deg)';
+    }
+    const newObj = { ...currentStyle, transform: `scale(1.2) translateY(-5px) ${rotate}` };
     this.setState({ currentStyle: newObj });
   }
 
@@ -100,6 +104,6 @@ export default class IconTextOptionElement extends Component {
 
 IconTextOptionElement.propTypes = {
   color: PropTypes.string.isRequired,
-  iconClass: PropTypes.string.isRequired,
+  iconClass: PropTypes.any.isRequired,
   label: PropTypes.string.isRequired
 };

@@ -4,20 +4,24 @@ import Option from './Option';
 import OptionElement from './OptionElement';
 import Options from './Options';
 import OptionsStepContainer from './OptionsStepContainer';
+import ImageTextOptionElement from './ImageTextOptionElement';
+import IconTextOptionElement from './IconTextOptionElement';
 
 class OptionsStep extends Component {
   onOptionClick = ({ value }) => {
     const { triggerNextStep } = this.props;
 
     triggerNextStep({ value });
+
+    console.log('triggerd click');
   };
 
   renderOption = option => {
     const { bubbleOptionStyle, step } = this.props;
-    const { user } = step;
-    const { value, label } = option;
+    const { user, optionType = 'default' } = step;
+    const { value, label, image, iconClass, color } = option;
 
-    return (
+    return optionType === 'default' ? (
       <Option key={value} className="rsc-os-option">
         <OptionElement
           className="rsc-os-option-element"
@@ -28,6 +32,27 @@ class OptionsStep extends Component {
           {label}
         </OptionElement>
       </Option>
+    ) : optionType === 'image-text-option' ? (
+      <Option key={value} className="rsc-os-option">
+        <ImageTextOptionElement
+          className="rsc-os-option-element"
+          style={bubbleOptionStyle}
+          user={user}
+          label={label}
+          image={image}
+          clickCallback={this.onOptionClick}
+        />
+      </Option>
+    ) : (
+      <IconTextOptionElement
+        className="rsc-os-option-element"
+        style={bubbleOptionStyle}
+        user={user}
+        label={label}
+        iconClass={iconClass}
+        color={color}
+        clickCallback={this.onOptionClick}
+      />
     );
   };
 
@@ -38,7 +63,9 @@ class OptionsStep extends Component {
     return (
       <OptionsStepContainer className="rsc-os">
         <Options className="rsc-os-options">
-          {Object.keys(options).map(key => options[key]).map(this.renderOption)}
+          {Object.keys(options)
+            .map(key => options[key])
+            .map(this.renderOption)}
         </Options>
       </OptionsStepContainer>
     );

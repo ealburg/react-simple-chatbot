@@ -6,6 +6,7 @@ import Options from './Options';
 import OptionsStepContainer from './OptionsStepContainer';
 import ImageTextOptionElement from './ImageTextOptionElement';
 import IconTextOptionElement from './IconTextOptionElement';
+import TextOptionElement from './textOptionElement';
 
 class OptionsStep extends Component {
   onOptionClick = ({ value }) => {
@@ -17,19 +18,23 @@ class OptionsStep extends Component {
   renderOption = option => {
     const { bubbleOptionStyle, step } = this.props;
     const { user, optionType = 'default' } = step;
-    const { value, label, image, iconClass, color } = option;
+    const { value, label, image, iconClass, color, text, textStyle } = option;
     const key = `option_${Math.floor(Math.random() * 1000)}`;
 
     return optionType === 'default' ? (
       <Option key={value} className="rsc-os-option" key={key}>
-        <OptionElement
+        <TextOptionElement
           className="rsc-os-option-element"
           style={bubbleOptionStyle}
           user={user}
-          onClick={() => this.onOptionClick({ value })}
+          text={text}
+          label={label}
+          textStyle={textStyle}
+          value={value}
+          clickCallback={() => this.onOptionClick({ value })}
         >
           {label}
-        </OptionElement>
+        </TextOptionElement>
       </Option>
     ) : optionType === 'image-text-option' ? (
       <Option key={value} className="rsc-os-option">
@@ -39,6 +44,7 @@ class OptionsStep extends Component {
           user={user}
           label={label}
           image={image}
+          value={value}
           clickCallback={this.onOptionClick}
         />
       </Option>
@@ -50,6 +56,7 @@ class OptionsStep extends Component {
         label={label}
         iconClass={iconClass}
         color={color}
+        value={value}
         clickCallback={this.onOptionClick}
       />
     );

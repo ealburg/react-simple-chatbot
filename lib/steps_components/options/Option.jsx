@@ -7,6 +7,7 @@ const Option = styled.li`
   display: inline-block;
   margin: 2px;
   transform: scale(0);
+  flex: 1;
 `;
 
 export default Option;

@@ -1,41 +1,23 @@
-import React, { Component, useState } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { fab } from '@fortawesome/free-brands-svg-icons';
 
-import {
-  faCoffee,
-  faCog,
-  faBolt,
-  faSpinner,
-  faQuoteLeft,
-  faSquare,
-  faCheckSquare,
-  faSearch,
-  faUserAlt,
-  faPersonBooth,
-  faPeopleCarry
-} from '@fortawesome/free-solid-svg-icons';
-
-library.add(fab, faCog, faBolt, faSearch, faUserAlt, faPeopleCarry);
-export default class IconTextOptionElement extends Component {
+export default class TextOptionElement extends Component {
   holderStyle = {
     width: '100%',
-    height: 100,
+    height: 110,
     overflow: 'hidden',
     borderRadius: 15,
     backgroundColor: 'rgb(20,126,251)',
     marginRight: 5,
     marginBottom: 15,
-    cursor: 'pointer'
+    cursor: 'pointer',
+    margin: 'auto'
   };
 
   labelStyle = {
     bottom: 0,
-    width: '100%',
+    width: '50%',
     fontSize: 15,
-    fontWeight: 'bold',
     textAlign: 'center',
     height: 20,
     backgroundColor: 'rgb(20,126,251)',
@@ -44,25 +26,27 @@ export default class IconTextOptionElement extends Component {
     paddingTop: 5,
     paddingBottom: 5,
     letterSpacing: 3,
-    lineHeight: 1
+    lineHeight: 1,
+    margin: 'auto'
   };
 
   constructor(props) {
     super(props);
-    const { iconClass, color, label, value } = props;
+    const { color, label, value, text, textStyle } = props;
 
     this.childImageStyle = {
       width: '100%',
       height: '35%',
       transition: '0.6s',
       textAlign: 'center',
-      paddingTop: 20
+      paddingTop: 15,
+      paddingBottom: 5
     };
 
     this.state = {
       currentStyle: this.childImageStyle,
       color,
-      iconClass,
+      text,
       label,
       value
     };
@@ -72,11 +56,7 @@ export default class IconTextOptionElement extends Component {
   }
 
   zoomIn() {
-    const { currentStyle, iconClass } = this.state;
-    let rotate = '';
-    if (iconClass[1] === 'bolt') {
-      rotate = 'rotate(30deg)';
-    }
+    const { currentStyle } = this.state;
     const newObj = { ...currentStyle, transform: `scale(1.2) translateY(-5px)` };
     this.setState({ currentStyle: newObj });
   }
@@ -86,11 +66,8 @@ export default class IconTextOptionElement extends Component {
   }
 
   render() {
-    const { currentStyle, label, color, iconClass, value } = this.state;
+    const { currentStyle, label, color, text, value, textStyle } = this.state;
     const rotateStyle = {};
-    // if (iconClass[1] === 'bolt') {
-    //   rotateStyle = { transform: 'rotate(30deg)' };
-    // }
     return (
       <div style={this.holderStyle} onClick={() => this.props.clickCallback({ value })}>
         <div
@@ -98,17 +75,20 @@ export default class IconTextOptionElement extends Component {
           onMouseEnter={this.zoomIn}
           onMouseLeave={this.zoomOut}
         >
-          <FontAwesomeIcon icon={iconClass} fixedWidth size="2x" />
+          <div style={{color: 'yellow', fontSize: 34,}}>{text}</div>
         </div>
+        <div style={{width: '100%', margin: 'auto'}}>
         <div style={this.labelStyle}>{label}</div>
+        </div>
+        
       </div>
     );
   }
 }
 
-IconTextOptionElement.propTypes = {
+TextOptionElement.propTypes = {
   color: PropTypes.string.isRequired,
-  iconClass: PropTypes.any.isRequired,
+  text: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired
 };

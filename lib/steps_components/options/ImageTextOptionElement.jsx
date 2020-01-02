@@ -26,7 +26,7 @@ export default class ImageTextOptionElement extends Component {
 
   constructor(props) {
     super(props);
-    const { image, label } = props;
+    const { image, label, value } = props;
 
     this.childImageStyle = {
       width: '100%',
@@ -39,7 +39,8 @@ export default class ImageTextOptionElement extends Component {
 
     this.state = {
       currentStyle: this.childImageStyle,
-      label
+      label,
+      value
     };
 
     this.zoomIn = this.zoomIn.bind(this);
@@ -57,10 +58,10 @@ export default class ImageTextOptionElement extends Component {
   }
 
   render() {
-    const { currentStyle, label } = this.state;
+    const { currentStyle, label, value } = this.state;
     return (
       <div style={this.holderStyle}>
-        <div style={currentStyle} onMouseEnter={this.zoomIn} onMouseLeave={this.zoomOut} onClick={() => this.props.clickCallback({value: label})} />
+        <div style={currentStyle} onMouseEnter={this.zoomIn} onMouseLeave={this.zoomOut} onClick={() => this.props.clickCallback({value: value})} />
         <div style={this.labelStyle}>{label}</div>
       </div>
     );
@@ -69,5 +70,6 @@ export default class ImageTextOptionElement extends Component {
 
 ImageTextOptionElement.propTypes = {
   image: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired
+  label: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired
 };

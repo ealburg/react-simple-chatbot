@@ -11,7 +11,7 @@ export default class ImageTextOptionElement extends Component {
 
   labelStyle = {
     bottom: 0,
-    width: '100%',
+    width: 100,
     fontSize: 15,
     fontWeight: 'bold',
     textAlign: 'center',

@@ -21,7 +21,7 @@ import {
 library.add(fab, faCog, faBolt, faSearch, faUserAlt, faPeopleCarry);
 export default class IconTextOptionElement extends Component {
   holderStyle = {
-    width: '100%',
+    width: '31%',
     height: 100,
     overflow: 'hidden',
     borderRadius: 15,
@@ -35,7 +35,6 @@ export default class IconTextOptionElement extends Component {
     bottom: 0,
     width: '100%',
     fontSize: 15,
-    fontWeight: 'bold',
     textAlign: 'center',
     height: 20,
     backgroundColor: 'rgb(20,126,251)',
@@ -43,7 +42,7 @@ export default class IconTextOptionElement extends Component {
     color: 'black',
     paddingTop: 5,
     paddingBottom: 5,
-    letterSpacing: 3,
+    letterSpacing: 1,
     lineHeight: 1
   };
 

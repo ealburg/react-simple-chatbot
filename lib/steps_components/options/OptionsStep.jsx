@@ -18,7 +18,7 @@ class OptionsStep extends Component {
   renderOption = option => {
     const { bubbleOptionStyle, step } = this.props;
     const { user, optionType = 'default' } = step;
-    const { value, label, image, iconClass, color, text, textStyle } = option;
+    const { value, label, image, iconClass, color, text, hideText } = option;
     const key = `option_${Math.floor(Math.random() * 1000)}`;
 
     return optionType === 'default' ? (
@@ -29,8 +29,8 @@ class OptionsStep extends Component {
           user={user}
           text={text}
           label={label}
-          textStyle={textStyle}
           value={value}
+          hideText={hideText}
           clickCallback={() => this.onOptionClick({ value })}
         >
           {label}
@@ -62,19 +62,55 @@ class OptionsStep extends Component {
     );
   };
 
+  renderPlaceHolders = options => {
+    const num = Object.keys(options).length;
+    const splitNum = 3;
+
+    if (num === splitNum || num % splitNum === 0) return null;
+
+    const diff = num < splitNum ? splitNum - num : splitNum - (num % splitNum);
+    if (diff === 0) return null;
+
+    const els = [];
+    for (let i = 0; i < diff; i += 1) {
+      els.push(
+        <Option>
+          <div
+            style={{
+              flex: 1,
+              height: 100,
+              minWidth: 100,
+              width: '100%',
+              backgroundColor: 'transparent'
+            }}
+          />
+        </Option>
+      );
+    }
+
+    return els;
+  };
+
   render() {
     const { step } = this.props;
     const { options } = step;
 
     const key = `optionstep_${Math.floor(Math.random() * 1000)}`;
     const key2 = `optionstep_${Math.floor(Math.random() * 1000)}`;
-    
+
+    const skipFill = step.fillOptions || false;
+
     return (
       <OptionsStepContainer className="rsc-os" key={key}>
-        <Options key={key2} className="rsc-os-options" style={{ display: 'flex' }}>
+        <Options
+          key={key2}
+          className="rsc-os-options"
+          style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}
+        >
           {Object.keys(options)
             .map(key => options[key])
             .map(this.renderOption)}
+          {skipFill && this.renderPlaceHolders(options)}
         </Options>
       </OptionsStepContainer>
     );

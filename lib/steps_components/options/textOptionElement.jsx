@@ -32,7 +32,7 @@ export default class TextOptionElement extends Component {
 
   constructor(props) {
     super(props);
-    const { color, label, value, text, textStyle } = props;
+    const { color, label, value, text, hideText } = props;
 
     this.childImageStyle = {
       width: '100%',
@@ -43,13 +43,21 @@ export default class TextOptionElement extends Component {
       paddingBottom: 5
     };
 
+    this.childImageStyle = {
+      ...this.childImageStyle,
+      height: hideText ? 0 : this.childImageStyle.height
+    };
+
     this.state = {
       currentStyle: this.childImageStyle,
       color,
       text,
       label,
-      value
+      value,
+      hideText: hideText || false
     };
+
+    this.holderStyle = { ...this.holderStyle, height: hideText ? 80 : 110 };
 
     this.zoomIn = this.zoomIn.bind(this);
     this.zoomOut = this.zoomOut.bind(this);
@@ -66,29 +74,40 @@ export default class TextOptionElement extends Component {
   }
 
   render() {
-    const { currentStyle, label, color, text, value, textStyle } = this.state;
+    const { currentStyle, label, color, text, value, hideText } = this.state;
     const rotateStyle = {};
     return (
-      <div style={this.holderStyle} onClick={() => this.props.clickCallback({ value })}>
+      <div
+        style={this.holderStyle}
+        onClick={() => this.props.clickCallback({ value })}
+        onMouseEnter={hideText ? this.zoomIn : () => {}}
+        onMouseLeave={hideText ? this.zoomOut : () => {}}
+      >
         <div
           style={{ ...currentStyle, color, ...rotateStyle }}
           onMouseEnter={this.zoomIn}
           onMouseLeave={this.zoomOut}
         >
-          <div style={{color: 'yellow', fontSize: 34,}}>{text}</div>
+          <div style={{ color: 'yellow', fontSize: 34, display: hideText ? 'none' : 'inline' }}>
+            {text}
+          </div>
         </div>
-        <div style={{width: '100%', margin: 'auto'}}>
-        <div style={this.labelStyle}>{label}</div>
+        <div style={{ width: '100%', margin: 'auto' }}>
+          <div style={this.labelStyle}>{label}</div>
         </div>
-        
       </div>
     );
   }
 }
 
+TextOptionElement.defaultProps = {
+  hideText: false
+};
+
 TextOptionElement.propTypes = {
   color: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired
+  value: PropTypes.string.isRequired,
+  hideText: PropTypes.bool
 };

@@ -87,7 +87,11 @@ class TextStep extends Component {
           isFirst={isFirst}
           isLast={isLast}
         >
-          {loading ? <Loading /> : this.renderMessage()}
+          {loading ? (
+            <Loading color={user ? 'white' : '#808088'} />
+          ) : (
+            this.renderMessage()
+          )}
         </Bubble>
       </TextStepContainer>
     );

@@ -234,6 +234,19 @@ class ChatBot extends Component {
     return typeof options === 'function' ? options({ previousValue, steps }) : options;
   };
 
+  addStepToStack = newStep => {
+    const { steps } = this.state;
+    const { botDelay, botAvatar } = this.props;
+
+    const settings = { delay: botDelay, avatar: botAvatar };
+
+    const nsteps = Object.assign({}, steps);
+    nsteps[newStep.id] = Object.assign({}, settings, newStep);
+    this.setState({
+      steps: nsteps
+    });
+  };
+
   moveToStep = (id, trigger = null) => {
     const { previousSteps, renderedSteps, steps } = this.state;
 
@@ -606,7 +619,7 @@ class ChatBot extends Component {
       hideUserAvatar,
       speechSynthesis
     } = this.props;
-    const { options, component, asMessage } = step;
+    const { options, component, asMessage, user } = step;
     const steps = this.generateRenderedStepsById();
     const previousStep = index > 0 ? renderedSteps[index - 1] : {};
 
@@ -647,7 +660,11 @@ class ChatBot extends Component {
         previousValue={previousStep.value}
         triggerNextStep={this.triggerNextStep}
         avatarStyle={avatarStyle}
-        bubbleStyle={bubbleStyle}
+        bubbleStyle={
+          !user
+            ? bubbleStyle
+            : { ...bubbleStyle, backgroundColor: 'rgb(20, 126, 251)', color: 'white' }
+        }
         hideBotAvatar={hideBotAvatar}
         hideUserAvatar={hideUserAvatar}
         speechSynthesis={speechSynthesis}

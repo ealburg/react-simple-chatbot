@@ -15,10 +15,11 @@ import {
   faSearch,
   faUserAlt,
   faPersonBooth,
-  faPeopleCarry
+  faPeopleCarry,
+  faDollarSign
 } from '@fortawesome/free-solid-svg-icons';
 
-library.add(fab, faCog, faBolt, faSearch, faUserAlt, faPeopleCarry);
+library.add(fab, faCog, faBolt, faSearch, faUserAlt, faPeopleCarry, faDollarSign);
 export default class IconTextOptionElement extends Component {
   holderStyle = {
     width: '31%',

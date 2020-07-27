@@ -81,14 +81,14 @@ class TextStep extends Component {
         </ImageContainer>
         <Bubble
           className="rsc-ts-bubble"
-          style={bubbleStyle}
+          style={loading ? {...bubbleStyle} : bubbleStyle}
           user={user}
           showAvatar={showAvatar}
           isFirst={isFirst}
           isLast={isLast}
         >
           {loading ? (
-            <Loading color={user ? 'white' : '#808088'} />
+            <Loading color={user ? 'white' : '#808088'} style={{maxHeight: 30}}/>
           ) : (
             this.renderMessage()
           )}

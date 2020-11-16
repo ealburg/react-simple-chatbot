@@ -26,7 +26,7 @@ export default class TextOptionElement extends Component {
     paddingTop: 5,
     paddingBottom: 5,
     letterSpacing: 3,
-    lineHeight: 1,
+    lineHeight: '15px',
     margin: 'auto'
   };
 

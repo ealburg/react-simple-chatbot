@@ -21,7 +21,8 @@ export default class ImageTextOptionElement extends Component {
     color: 'white',
     paddingTop: 5,
     paddingBottom: 5,
-    position: 'fixed'
+    position: 'fixed',
+    lineHeight: '15px'
   };
 
   constructor(props) {

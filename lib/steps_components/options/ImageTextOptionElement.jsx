@@ -15,7 +15,7 @@ export default class ImageTextOptionElement extends Component {
     fontSize: 15,
     fontWeight: 'bold',
     textAlign: 'center',
-    height: 20,
+    // height: 20,
     backgroundColor: 'rgb(20,126,251)',
     fontFamily: '"Open Sans", sans-serif',
     color: 'white',

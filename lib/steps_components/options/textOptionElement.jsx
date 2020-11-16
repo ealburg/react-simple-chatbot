@@ -19,7 +19,7 @@ export default class TextOptionElement extends Component {
     width: '50%',
     fontSize: 15,
     textAlign: 'center',
-    height: 20,
+    // height: 20,
     backgroundColor: 'rgb(20,126,251)',
     fontFamily: '"Open Sans", sans-serif',
     color: 'black',
